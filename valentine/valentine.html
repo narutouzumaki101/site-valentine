@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Be My Valentine </title>
+
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            }
+
+            body {
+                height: 100vh;
+                background: linear-gradient(135deg, #ff4e8a, #ff99ac);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                overflow: hidden;
+            }
+
+            /* Floating Hearts */
+            .heart {
+                position: absolute;
+                bottom: -20px;
+                font-size: 20px;
+                animation: float 6s linear infinite;
+                color: white;
+                opacity: 0.8;
+            }
+
+            @keyframes float {
+                0% {
+                    transform: translateY(0) scale(1);
+                    opacity: 1;
+                }
+
+                100% {
+                    transform: translateY(-110vh) scale(1.5);
+                    opacity: 0;
+                }
+            }
+
+            .container {
+                background: white;
+                padding: 40px;
+                border-radius: 20px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+                text-align: center;
+                position: relative;
+                z-index: 10;
+                width: 90%;
+                max-width: 400px;
+            }
+
+            h1 {
+                color: #ff2e63;
+                margin-bottom: 30px;
+            }
+
+            .buttons {
+                position: relative;
+                height: 150px;
+            }
+
+            button {
+                padding: 12px 25px;
+                font-size: 16px;
+                border: none;
+                border-radius: 30px;
+                cursor: pointer;
+                position: absolute;
+                transition: 0.2s;
+            }
+
+            #yesBtn {
+                background: #ff2e63;
+                color: white;
+                left: 20%;
+                top: 40px;
+            }
+
+            #noBtn {
+                background: #333;
+                color: white;
+                left: 60%;
+                top: 40px;
+                transition: all 0.2s ease;
+            }
+
+            .message {
+                font-size: 20px;
+                color: #ff2e63;
+                display: none;
+                margin-top: 20px;
+            }
+        </style>
+
+    </head>
+
+    <body>
+        <div class="container">
+            <h1 id="question">Will you be my Valentine? ❤️</h1>
+
+            <div class="buttons" id="buttonArea">
+                <button id="yesBtn">YES 💓</button>
+                <button id="noBtn">NO 😥</button>
+            </div>
+
+            <div class="message" id="loveMessage">
+                You are my everything, and i am so grateful to have you in my life.Happy Valentine's Day! ❤️
+            </div>
+        </div>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const noBtn = document.getElementById("noBtn");
+                const yesBtn = document.getElementById("yesBtn");
+                const message = document.getElementById("loveMessage");
+                const question = document.getElementById("question");
+                const buttonArea = document.getElementById("buttonArea");   
+
+                // Runaway no button
+                function moveNoButton() {
+                    const maxX = buttonArea.clientWidth - noBtn.offsetWidth;
+                    const maxY = buttonArea.clientHeight - noBtn.offsetHeight;
+
+                    const randomX = Math.floor(Math.random() * maxX);
+                    const randomY = Math.floor(Math.random() * maxY);
+
+                    noBtn.style.left = randomX + "px";
+                    noBtn.style.top = randomY + "px";
+                };
+
+                // for desktop 
+                noBtn.addEventListener("mouseenter", moveNoButton);
+
+                // for mobile
+                noBtn.addEventListener("touchstart", function(e){
+                    e.preventDefault(); 
+                    moveNoButton();
+                });
+
+                // Yes button click
+                yesBtn.addEventListener("click", function(){
+                    question.style.display = "none";
+                    buttonArea.style.display = "none";
+                    message.style.display = "block";
+                });
+
+                // Generate floating hearts 
+                function createHeart() {
+                    const heart = document.createElement("div");
+                    heart.classList.add("heart");
+                    heart.innerHTML = "❤️";
+                    heart.style.left = Math.random() * 100 + "vw";
+                    heart.style.fontSize = (Math.random() * 20 + 15) + "px";
+                    heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
+
+                    document.body.appendChild(heart);
+
+                    setTimeout(() => {
+                        heart.remove();
+                    }, 6000);
+                }
+
+                setInterval(createHeart, 300);
+            });
+        </script>
+
+    </body>
+
+</html>
